@@ -1,95 +1,80 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 
-export default function Home() {
+import { Box, Flex, Image } from "@chakra-ui/react";
+import { ProfileForm } from "@app/ui/common/ProfileForm";
+import { LEONARDO_LOGO_URL } from '@app/lib/utils/constants';
+
+export default async function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <Box 
+      position="relative" 
+      minH="100vh" 
+      overflow="hidden"
+    >
+      {/* Kitten video attached to the card */}
+      <Box
+        position="absolute"
+        top={{ base: "10vh", md: "15vh" }}
+        right={{ base: "10vw", md: "25vw" }}
+        zIndex={-1}
+        width="clamp(200px, 25vw, 300px)"
+        transform="rotate(12deg)"
+        opacity={0.92}
+        pointerEvents="none"
+        filter="drop-shadow(0 0 32px #a21caf)"
+      >
+        <video
+          src="https://leonardo.ai/wp-content/uploads/2024/05/cat-space-med-1.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ width: "100%", borderRadius: "24px" }}
         />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </Box>
+      {/* Universal Upscaler image bottom left */}
+      <Box
+        position="absolute"
+        bottom={{ base: "5vh", md: "10vh" }}
+        left={{ base: "10vw", md: "20vw" }}
+        zIndex={-1}
+        width="clamp(200px, 25vw, 300px)"
+        transform="rotate(-8deg)"
+        opacity={0.92}
+        pointerEvents="none"
+        filter="drop-shadow(0 0 32px #a21caf)"
+      >
+        <Image
+          src="https://leonardo.ai/wp-content/uploads/2025/05/default_insanity-square-2-480x480.jpg.webp"
+          alt="Universal Upscaler"
+          borderRadius="24px"
+          w="100%"
+          h="auto"
+        />
+      </Box>
+      {/* Leonardo Logo Background Watermark - Page-specific - though tempting but DO NOT move this to root layout to avoid animes loading skeleton visual overlap! */}
+      <Box
+        position="absolute"
+        top="50%"
+        right="20%"
+        transform="translateY(-50%)"
+        width="120vw"
+        height="120vh"
+        opacity={0.03}
+        pointerEvents="none"
+        zIndex={0}
+      >
+        <Image
+          src={LEONARDO_LOGO_URL}
+          alt="Leonardo Background"
+          w="100%"
+          h="100%"
+          objectFit="contain"
+        />
+      </Box>
+      
+      <Flex minH="100vh" align="center" justify="center" position="relative" zIndex={1}>
+        <ProfileForm />
+      </Flex>
+    </Box>
   );
 }

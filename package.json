@@ -2,6 +2,8 @@
   "name": "leonardo-challenge",
   "version": "0.1.0",
   "private": true,
+  "author": "Your Name <your.email@example.com>",
+  "description": "A Next.js application for discovering anime and manga, built with Leonardo.AI's design aesthetic",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,17 +11,24 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.4.3"
+    "@apollo/client": "^3.13.8",
+    "@chakra-ui/react": "^3.21.0",
+    "@emotion/react": "^11.14.0",
+    "@fontsource/fredoka": "^5.2.8",
+    "graphql": "^16.11.0",
+    "next": "15.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.4.3",
-    "@eslint/eslintrc": "^3"
+    "eslint-config-next": "15.3.4",
+    "typescript": "^5"
   }
 }

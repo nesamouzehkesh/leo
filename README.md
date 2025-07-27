@@ -141,5 +141,20 @@ These API limitations created several development roadblocks:
 - [ ] Ran out of time to implement prefilling of the form with user data from cookies if they land on `/` by clicking on profile icon.
 - [ ] Needed more time to investigate the issues related to pagination numbers and what api was returning (which I still believe is the cause) and how it also interferes with search results as I have explained above in `API Limitations & Development Roadblocks` section.
 
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home Page](/public/screenshots/homepage.png)
+*User profile form*
+
+### 📺 Anime Grid
+![Anime Grid](/public/screenshots/animes-list.png)
+*Browse anime with search functionality and pagination*
+
+### 🎬 Anime Modal
+![Anime Modal](/public/screenshots/anime-modal.png)
+*Detailed anime information in modal*
+
 ## 🔗 Link to project
 https://leo-anime-pi.vercel.app/
+

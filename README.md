@@ -142,3 +142,4 @@ These API limitations created several development roadblocks:
 - [ ] Needed more time to investigate the issues related to pagination numbers and what api was returning (which I still believe is the cause) and how it also interferes with search results as I have explained above in `API Limitations & Development Roadblocks` section.
 
 ## 🔗 Link to project
+https://leo-anime-pi.vercel.app/

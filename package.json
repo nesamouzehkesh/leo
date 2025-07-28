@@ -2,7 +2,7 @@
   "name": "leonardo-challenge",
   "version": "0.1.0",
   "private": true,
-  "author": "Your Name <your.email@example.com>",
+  "author": "Nesa Mouzehkesh",
   "description": "A Next.js application for discovering anime and manga, built with Leonardo.AI's design aesthetic",
   "scripts": {
     "dev": "next dev",

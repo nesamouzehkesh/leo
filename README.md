@@ -139,6 +139,7 @@ These API limitations created several development roadblocks:
 - [ ] Enhanced accessibility
 - [ ] Mobile optimization
 - [ ] Ran out of time to implement prefilling of the form with user data from cookies if they land on `/` by clicking on profile icon.
+- [ ] Ran out of time to do the full in brand stayling for error pages 🥀
 - [ ] Needed more time to investigate the issues related to pagination numbers and what api was returning (which I still believe is the cause) and how it also interferes with search results as I have explained above in `API Limitations & Development Roadblocks` section.
 
 ## 📸 Screenshots

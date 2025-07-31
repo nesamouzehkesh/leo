@@ -41,56 +41,88 @@ interface AnimeModalSkeletonProps {
 }
 
 export function AnimeModalSkeleton({ onClose }: AnimeModalSkeletonProps) {
+  // Note: This log only appears once because React.lazy() caches the component after first load.
+  // Subsequent clicks use the cached component, so no new Promise is created and no log appears.
+  // This is the intended behavior of lazy loading - cache once, use many times!
+  console.log("Lazy loaded Fallback skeleton rendered...");
+
   return (
-    <>
-      {/* Loading Header */}
-      <Box bg="gray.800" borderBottom="1px solid" borderColor="gray.700" p={3} position="relative">
-        <Skeleton height="20px" width="50%" />
-        <Button
-          position="absolute"
-          top={2}
-          right={2}
-          color="gray.400"
-          variant="ghost"
-          size="sm"
-          onClick={onClose}
-          aria-label="Close modal"
-        >
-          <Icon as={FaTimes} />
-        </Button>
-      </Box>
-      
-      {/* Loading Content */}
-      <Box p={0}>
-        <Skeleton 
-          height="150px" 
-          bg="gray.800"
-        />
-        <Box p={4}>
-          <SkeletonText 
-            mt={3} 
-            noOfLines={2} 
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      zIndex={9999}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bg="blackAlpha.600"
+      backdropFilter="blur(10px)"
+      onClick={onClose}
+    >
+      <Box
+        bg="gray.900"
+        border="1px solid"
+        borderColor="gray.700"
+        maxW="600px"
+        w="90%"
+        maxH="85vh"
+        overflow="hidden"
+        borderRadius="lg"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+      >
+        {/* Loading Header */}
+        <Box bg="gray.800" borderBottom="1px solid" borderColor="gray.700" p={3} position="relative">
+          <Skeleton height="20px" width="50%" />
+          <Button
+            position="absolute"
+            top={2}
+            right={2}
+            color="gray.400"
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            <Icon as={FaTimes} />
+          </Button>
+        </Box>
+        
+        {/* Loading Content */}
+        <Box p={0}>
+          <Skeleton 
+            height="150px" 
             bg="gray.800"
           />
-          <HStack mt={4} gap={3}>
-            <Skeleton 
-              height="16px" 
-              width="60px" 
+          <Box p={4}>
+            <SkeletonText 
+              mt={3} 
+              noOfLines={2} 
               bg="gray.800"
             />
-            <Skeleton 
-              height="16px" 
-              width="50px" 
-              bg="gray.800"
-            />
-            <Skeleton 
-              height="16px" 
-              width="80px" 
-              bg="gray.800"
-            />
-          </HStack>
+            <HStack mt={4} gap={3}>
+              <Skeleton 
+                height="16px" 
+                width="60px" 
+                bg="gray.800"
+              />
+              <Skeleton 
+                height="16px" 
+                width="50px" 
+                bg="gray.800"
+              />
+              <Skeleton 
+                height="16px" 
+                width="80px" 
+                bg="gray.800"
+              />
+            </HStack>
+          </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }

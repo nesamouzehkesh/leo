@@ -5,13 +5,24 @@ import '@fontsource/fredoka/600.css';
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import { AnimeCard } from "@app/ui/animes/AnimeCard";
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import { Suspense, lazy } from 'react';
 import { AnimeModalSkeleton } from "@app/ui/animes/skeletons";
 
-// Dynamically import the modal
-const LazyAnimeModal = dynamic(() => import('@app/ui/animes/AnimeModal').then(mod => mod.AnimeModal), {
-  ssr: false, // because it's client-only (uses hooks, DOM)
+// const LazyAnimeModal = lazy(() => 
+//   import('@app/ui/animes/AnimeModal').then(mod => ({ default: mod.AnimeModal }))
+// );
+
+// 2 seconds delay for demo purposes...
+const LazyAnimeModal = lazy(() => {
+  console.log("⏳ Simulating LazyAnimeModal load...");
+  return new Promise<{ default: React.ComponentType<any> }>((resolve) => {
+    setTimeout(() => {
+      import('@app/ui/animes/AnimeModal').then((mod) => {
+        console.log("✅ LazyAnimeModal loaded");
+        resolve({ default: mod.AnimeModal });
+      });
+    }, 2000);
+  });
 });
 
 function EmptyState({ searchQuery }: { searchQuery: string | null }) {
@@ -77,15 +88,15 @@ export function AnimesList({ data }: { data: any }) {
         </SimpleGrid>
       </Box>
 
-      <Suspense fallback={<AnimeModalSkeleton onClose={handleCloseModal} />}>
-        {isModalOpen && selectedAnime && (
+      {isModalOpen && selectedAnime && (
+        <Suspense fallback={<AnimeModalSkeleton onClose={handleCloseModal} />}>
           <LazyAnimeModal
             isOpen={isModalOpen}
             onClose={handleCloseModal}
             anime={selectedAnime}
           />
-        )}
-      </Suspense>
+        </Suspense>
+      )}
     </>
   );
 }

@@ -4,8 +4,15 @@ import { Box, Text, SimpleGrid, VStack, Icon } from "@chakra-ui/react";
 import '@fontsource/fredoka/600.css';
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import { AnimeModal } from "@app/ui/animes/AnimeModal";
 import { AnimeCard } from "@app/ui/animes/AnimeCard";
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+import { AnimeModalSkeleton } from "@app/ui/animes/skeletons";
+
+// Dynamically import the modal
+const LazyAnimeModal = dynamic(() => import('@app/ui/animes/AnimeModal').then(mod => mod.AnimeModal), {
+  ssr: false, // because it's client-only (uses hooks, DOM)
+});
 
 function EmptyState({ searchQuery }: { searchQuery: string | null }) {
   return (
@@ -38,23 +45,15 @@ export function AnimesList({ data }: { data: any }) {
   const searchQuery = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('query') : null;
   const [selectedAnime, setSelectedAnime] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleAnimeClick = (anime: any) => {
     setSelectedAnime(anime);
     setIsModalOpen(true);
-    setIsLoading(true);
-    
-    // for better demo purposes - REMOVE FOR PRODUCTION!🚫
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedAnime(null);
-    setIsLoading(false);
   };
 
   if (animes.length === 0) {
@@ -78,12 +77,15 @@ export function AnimesList({ data }: { data: any }) {
         </SimpleGrid>
       </Box>
 
-      <AnimeModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        anime={selectedAnime}
-        isLoading={isLoading}
-      />
+      <Suspense fallback={<AnimeModalSkeleton onClose={handleCloseModal} />}>
+        {isModalOpen && selectedAnime && (
+          <LazyAnimeModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            anime={selectedAnime}
+          />
+        )}
+      </Suspense>
     </>
   );
 }

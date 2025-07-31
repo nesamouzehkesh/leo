@@ -4,17 +4,15 @@ import { Box, Button, Image, Text, Badge, Flex, VStack, HStack, Icon } from '@ch
 import { FaTimes, FaStar, FaCalendar, FaClock, FaPlay } from 'react-icons/fa';
 import { useEscapeKey } from '@app/lib/hooks/useEscapeKey';
 import { formatDate, formatDuration, getStatusColor } from '@app/lib/utils/anime-utils';
-import { AnimeModalSkeleton } from './skeletons';
 import { AnimeData } from '@app/lib/definitions';
 
 interface AnimeModalProps {
   isOpen: boolean;
   onClose: () => void;
   anime: AnimeData | null;
-  isLoading: boolean;
 }
 
-export function AnimeModal({ isOpen, onClose, anime, isLoading }: AnimeModalProps) {
+export function AnimeModal({ isOpen, onClose, anime }: AnimeModalProps) {
   useEscapeKey(isOpen, onClose);
 
   if (!isOpen) return null;
@@ -48,9 +46,7 @@ export function AnimeModal({ isOpen, onClose, anime, isLoading }: AnimeModalProp
         aria-modal="true"
         aria-labelledby="anime-title"
       >
-        {isLoading ? (
-          <AnimeModalSkeleton onClose={onClose} />
-        ) : anime ? (
+         {anime ? (
           <>
             {/* Banner Image */}
             <Box position="relative" height="150px" overflow="hidden">

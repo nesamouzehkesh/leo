@@ -17,14 +17,8 @@ export default function AnimesPage() {
   const searchQuery = searchParams.get("query");
   const pageParam = searchParams.get('page');
   const currentPage = pageParam ? Number(pageParam) : 1;
-  
-  // Trigger not-found for invalid page numbers; so for example this one will show your customised not found
-  // page: http://nesa.com.au/animes?page=210www ☔️
-  if (pageParam && (isNaN(currentPage) || currentPage < 1)) {
-    notFound();
-  }
 
-  // Only search if query is at least 2 characters
+  // Only search if query is at least 2 characters - additional check here on minimum 2 chars for cases where user may add ?query= manually
   const search = searchQuery && searchQuery.trim().length >= 2 ? searchQuery.trim() : undefined;
 
   const { data, loading, error, refetch } = useQuery(GET_ANIME_PAGE, {

@@ -1,4 +1,24 @@
 "use client";
+
+/**
+ * TIL: 🎯
+ * 
+ * This error boundary catches errors that occur during:
+ * - React component rendering lifecycle
+ * - Server-side rendering (SSR) errors
+ * - Client-side hydration errors
+ * - Errors in React hooks (useState, useEffect, etc.)
+ * - Errors in event handlers (if they bubble up to the component tree)
+ * - GraphQL query errors from Apollo Client (network issues, API errors, etc.) - 400, 500 codes for instance
+ * 
+ * It does NOT catch:
+ * - Explicitly thrown errors with `throw new Error()` in client components;
+ * (which I tried and it showed but had an error on page!)
+ * 
+ * Example: Try http://localhost:3000/animes?query=ki&page=277777777 or http://localhost:3000/animes?query=ki&page=2ww
+ * GraphQL accepts them as valid page number, but the query fails causing an Apollo error that triggers this error boundary.
+ * 
+ */
 import { Box, Flex, Image, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { LEONARDO_LOGO_URL } from '@app/lib/utils/constants';
@@ -23,6 +43,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
         <ErrorMessage 
           message={error.message || 'An unexpected error occurred while loading animes.'}
           onRetry={reset}
+          retryText="Try Again"
           showIcon={false}
         />
         

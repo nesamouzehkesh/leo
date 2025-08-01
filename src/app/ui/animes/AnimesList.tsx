@@ -67,6 +67,7 @@ export function AnimesList({ data }: { data: any }) {
     setSelectedAnime(null);
   };
 
+  // Show empty state when we get 200 from server but no media results
   if (animes.length === 0) {
     return <EmptyState searchQuery={searchQuery} />;
   }

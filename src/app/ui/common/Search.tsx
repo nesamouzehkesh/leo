@@ -3,7 +3,7 @@
 import { Box, Input } from '@chakra-ui/react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebounce } from '@app/lib/hooks/useDebounce';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 
 export function Search() {
   const searchParams = useSearchParams();
@@ -11,27 +11,31 @@ export function Search() {
   const { replace } = useRouter();
   const [searchValue, setSearchValue] = useState(searchParams.get('query') || '');
   const debouncedSearchValue = useDebounce({ inputValue: searchValue, delay: 300 });
-  const lastProcessedValue = useRef(debouncedSearchValue);
 
   // Update URL when debounced value changes
   useEffect(() => {
-    // Only update if the value has actually changed
-    if (debouncedSearchValue !== lastProcessedValue.current) {
+      const trimmed = debouncedSearchValue?.trim();
       const params = new URLSearchParams(searchParams);
-      
-      if (debouncedSearchValue && debouncedSearchValue.trim().length >= 2) {
-        params.set('query', debouncedSearchValue.trim());
+      const currentQuery = searchParams.get('query');
+  
+      // Only update if the query has actually changed
+      if (trimmed.length >= 2) {
+        if (currentQuery !== trimmed) {
+          params.set('query', trimmed);
+          params.delete('page'); // Only delete page when query changes
+        }
       } else {
-        params.delete('query');
+        if (currentQuery) { // delete page and query from URL search params if the currentQuery gets edited to less than 2 chars
+          params.delete('query');
+          params.delete('page'); 
+        }
       }
-      
-      // Reset to page 1 when searching
-      params.delete('page');
-      
+  
+      console.log('✅ URL updated:', `${pathname}?${params.toString()}`);
+  
       replace(`${pathname}?${params.toString()}`);
-      lastProcessedValue.current = debouncedSearchValue;
-    }
-  }, [debouncedSearchValue, pathname, replace, searchParams]);
+    }, [debouncedSearchValue, pathname, replace, searchParams]);
+  
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);

@@ -9,7 +9,7 @@
  * Note: This is different from error.tsx which catches runtime errors.
  * This is for 404 "Page Not Found" scenarios.
  */
-import { Box, Flex, Image, Text, Button } from '@chakra-ui/react';
+import { Box, Flex, Image } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { LEONARDO_LOGO_URL } from '@app/lib/utils/constants';
 import { ErrorMessage } from '@app/ui/common/ErrorMessage';

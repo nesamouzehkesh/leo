@@ -8,7 +8,6 @@ import Pagination from "@app/ui/common/Pagination";
 import { ErrorMessage } from "@app/ui/common/ErrorMessage";
 import { useSearchParams } from "next/navigation";
 import { ANIMES_PER_PAGE } from "@app/lib/utils/constants";
-import { notFound } from "next/navigation";
 import { Box } from "@chakra-ui/react";
 
 export default function AnimesPage() {

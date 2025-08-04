@@ -89,6 +89,25 @@ Next.js middleware protects `/animes` route by checking for `user_profile` cooki
 - **Allows access** if valid profile cookie is present (so if you are on `/animes` and go to `/` via the profile icon click then from `/` manually enter `/animes` you can still be redirected to `/animes` and see everything because you still have your valid cookies)
 - **Enables profile editing**: Users with cookies can still access `/` to edit their profile
 
+#### 🔐 Server-Side Authentication Architecture
+I implemented a **hybrid server/client architecture** for optimal performance and security:
+
+**Server Components** (`UserProfileDisplay`):
+- **Server-side rendering** - User profile reads from cookies server-side
+- **No client hydration** - User info displays immediately without loading states
+- **Better SEO** - User data available in initial HTML
+- **Performance** - Reduced client bundle size
+
+**Client Components** (`SignOutButton`):
+- **Interactive functionality** - Handles click events and loading states
+- **API integration** - Calls server-side logout endpoint
+- **Error handling** - Manages failed logout attempts
+
+**API Route** (`/api/logout`):
+- **httpOnly cookies** - Prevents JavaScript access (XSS protection)
+- **Server-side clearing** - Immediate middleware recognition
+- **Production pattern** - Matches real-world authentication flows
+
 #### ⚠️ Error Boundaries & Not Found
 Combined global and route-specific error handling:
 - **Global error boundary** (`/app/error.tsx`) catches unexpected errors

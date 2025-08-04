@@ -2,27 +2,34 @@
 
 import { Button } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import { useUserProfile } from '@app/lib/hooks/useUserProfile';
 import { useState } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
 
 export function SignOutButton() {
-  const { clearUserProfile } = useUserProfile();
   const router = useRouter();
   
   /**
    * We need this state to handle the sign-out transition period:
    * 1. User clicks "Sign Out" → button shows loading spinner
-   * 2. Router redirects to home page
+   * 2. API call clears server-side cookie
+   * 3. Router redirects to home page
    * This ensures users see feedback that their action was registered and prevents multiple clicks! 🧩
    */
   const [isSigningOut, setIsSigningOut] = useState(false);
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     setIsSigningOut(true);
-    clearUserProfile();
-    // Immediately redirect to home page since middleware won't see the change until refresh 🙁
-    router.push('/');
+    
+    try {
+      // Call server-side logout API to clear httpOnly cookie
+      await fetch('/api/logout', { method: 'POST' });
+      
+      // Redirect to home page
+      router.push('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      setIsSigningOut(false);
+    }
   };
 
   if (isSigningOut) {

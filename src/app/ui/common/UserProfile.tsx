@@ -3,6 +3,7 @@ import { FaUser } from 'react-icons/fa';
 import { getUserCookieValue } from '@app/lib/utils/get-user-profile-from-cookies';
 import { SignOutButton } from './SignOutButton';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 /**
  * Server Component - User Profile Display 🎯
@@ -20,7 +21,7 @@ export async function UserProfileDisplay() {
   const userProfile = await getUserCookieValue(); // getting the cookies info server side
   
   if (!userProfile) {
-    return null;
+    redirect('/');
   }
 
   return (

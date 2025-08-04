@@ -108,6 +108,24 @@ I implemented a **hybrid server/client architecture** for optimal performance an
 - **Server-side clearing** - Immediate middleware recognition
 - **Production pattern** - Matches real-world authentication flows
 
+#### 📝 Form Prefill with Server-Side Data
+I implemented **seamless profile editing** using server-side cookie reading:
+
+**HomePage (Server Component)**:
+- **Server-side cookie reading** - Uses `getUserCookieValue()` for secure access
+- **Props passing** - Passes user data to client components
+- **httpOnly compatibility** - Works with secure cookies
+
+**ProfileForm (Client Component)**:
+- **Prefill functionality** - Form inputs populate with existing user data
+- **Seamless UX** - Users can edit their profile without re-entering data
+- **Server-side data** - No client-side cookie parsing needed
+
+**Benefits**:
+- **Better UX** - Users see their current profile data when editing
+- **Security** - Uses server-side cookie reading instead of client-side
+- **Performance** - No client-side cookie parsing or hydration delays
+
 #### ⚠️ Error Boundaries & Not Found
 Combined global and route-specific error handling:
 - **Global error boundary** (`/app/error.tsx`) catches unexpected errors
@@ -157,8 +175,8 @@ These API limitations created several development roadblocks:
 - [ ] Dark/light theme switching
 - [ ] Enhanced accessibility
 - [ ] Mobile optimization
-- [ ] Ran out of time to implement prefilling of the form with user data from cookies if they land on `/` by clicking on profile icon.
-- [ ] Ran out of time to do the full in brand stayling for error pages 🥀
+- [x] ✅ **Form prefill with server-side data** - Users can now edit their profile seamlessly
+- [x] ✅ Full in brand styling for error pages
 - [ ] Needed more time to investigate the issues related to pagination numbers and what api was returning (which I still believe is the cause) and how it also interferes with search results as I have explained above in `API Limitations & Development Roadblocks` section.
 
 ## 📸 Screenshots

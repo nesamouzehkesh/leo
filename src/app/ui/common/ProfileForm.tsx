@@ -4,15 +4,29 @@ import { useActionState } from "react";
 import { Box, Button, Input, Text } from "@chakra-ui/react";
 import { saveProfile, ProfileState } from '@app/lib/actions';
 import { useState } from "react";
+import { UserProfile } from '@app/lib/definitions';
 
 const initialState: ProfileState = {
   errors: {},
   message: null,
 };
 
-export function ProfileForm() {
+interface ProfileFormProps {
+  prefillData?: UserProfile | null;
+}
+
+export function ProfileForm({ prefillData }: ProfileFormProps) {
   const [state, formAction] = useActionState(saveProfile, initialState);
-  const [formData, setFormData] = useState({ username: '', jobTitle: '' });
+  
+  /**
+   * Initialize form with prefill data from server-side cookies
+   * This allows users to see and edit their existing profile when they visit / page
+   * The prefillData comes from server-side cookie reading, ensuring httpOnly compatibility
+   */
+  const [formData, setFormData] = useState({ 
+    username: prefillData?.username || '', 
+    jobTitle: prefillData?.jobTitle || '' 
+  });
 
   const userNameError = state?.errors?.username?.[0] ?? null;
   const jobTitleError = state?.errors?.jobTitle?.[0] ?? null;

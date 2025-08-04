@@ -2,8 +2,12 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { ProfileForm } from "@app/ui/common/ProfileForm";
 import { LEONARDO_LOGO_URL } from '@app/lib/utils/constants';
+import { getUserCookieValue } from '@app/lib/utils/get-user-profile-from-cookies';
 
 export default async function HomePage() {
+  // Read user profile from cookies server-side for form prefill
+  // This allows users to edit their existing profile when they click the profile icon
+  const userProfile = await getUserCookieValue();
   return (
     <Box 
       position="relative" 
@@ -73,7 +77,7 @@ export default async function HomePage() {
       </Box>
       
       <Flex minH="100vh" align="center" justify="center" position="relative" zIndex={1}>
-        <ProfileForm />
+        <ProfileForm prefillData={userProfile} />
       </Flex>
     </Box>
   );

@@ -78,6 +78,13 @@ export function AnimesList({ data }: { data: any }) {
         <SimpleGrid
           columns={{ base: 2, sm: 3, md: 4, lg: 6 }}
           gap={{ base: 3, md: 4 }}
+          w="100%"
+          css={{
+            '& > *': {
+              minWidth: 0,
+              width: '100%'
+            }
+          }}
         >
           {animes.map((anime: any) => (
             <AnimeCard
